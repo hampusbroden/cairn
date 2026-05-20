@@ -67,7 +67,7 @@
           <div class="landing-hero-grid">
             <div class="landing-hero-content">
               <span class="uppercase-label tag-accent">AI-Powered Keepsakes</span>
-              <h1 class="landing-headline serif-display">Stack memories,<br>stone by stone.</h1>
+              <h1 class="landing-headline serif-display">Stack memories,<br><em>stone by stone.</em></h1>
               <p class="landing-intro">Create a modern, theme-aware digital guestbook for your wedding or special event. Gather text stories, sketches, hand-drawn scribbles, photos, and high-fidelity video greetings in a curated live feed. Download as a self-contained archive or print as an elegant album.</p>
               
               <div class="landing-ctas">
@@ -81,11 +81,12 @@
               <div class="showcase-card-stack">
                 
                 <!-- Cairn anchor illustration -->
-                <div class="showcase-card cairn-photo-card" style="top: -40px; left: 100px; transform: rotate(4deg); z-index: 4; width: 200px; padding: 10px; background:#fff;">
-                  <img src="assets/cairn_stones.png" style="width:100%; border-radius:4px; aspect-ratio:1/1; object-fit:cover; display:block;">
-                  <div style="font-size: 9px; text-transform: uppercase; color: var(--text-taupe); letter-spacing: 0.05em; margin-top: 8px; text-align: center; font-weight:600;">Built piece by piece.</div>
+                <div class="showcase-card cairn-photo-card">
+                  <img src="assets/cairn_stones.png" alt="Cairn Stones">
+                  <div class="cairn-photo-caption">Built piece by piece.</div>
                 </div>
                 
+                <!-- Guest message card -->
                 <div class="showcase-card text-card">
                   <div class="card-header">
                     <div class="guest-avatar" style="background:#C9A19A;">SH</div>
@@ -97,6 +98,7 @@
                   <p class="card-body-text">Dearest Anna & Erik, your ceremony in Mariefred was breathtaking. So honored to share this magic evening with you! ♥</p>
                 </div>
 
+                <!-- Guest video card -->
                 <div class="showcase-card video-card">
                   <div class="card-header">
                     <div class="guest-avatar" style="background:#A89A8A;">OL</div>
@@ -105,22 +107,29 @@
                       <span class="card-time">Just now</span>
                     </div>
                   </div>
-                  <div class="card-body-video" style="height:120px; background:#F8F5F0; display:flex; align-items:center; justify-content:center;">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text-charcoal)"><path d="M8 5v14l11-7z"/></svg>
-                    <span style="font-size:10px; margin-left:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; font-family:var(--font-sans);">Play Video Greeting</span>
+                  <div class="card-body-video">
+                    <div class="video-play-btn">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <span class="video-duration">0:14</span>
                   </div>
                 </div>
 
+                <!-- Guest scribble card -->
                 <div class="showcase-card scribble-card">
                   <div class="card-header">
-                    <div class="guest-avatar" style="background:#D2B48C;">AV</div>
+                    <div class="guest-avatar" style="background:#A2B5CD;">AV</div>
                     <div class="guest-meta">
                       <span class="guest-name">Anders V.</span>
                       <span class="card-time">1h ago</span>
                     </div>
                   </div>
-                  <div class="card-body-scribble" style="height:80px; display:flex; align-items:center; justify-content:center; border:1px dashed var(--text-taupe); border-radius:4px; font-family:'Newsreader', serif; font-size: 20px; font-style:italic;">
-                    Congratulations!
+                  <div class="card-body-scribble">
+                    <svg viewBox="0 0 200 80" width="100%" height="80" stroke="var(--text-charcoal)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M 25,45 C 15,25 45,20 55,40 C 65,20 95,25 85,45 C 70,60 55,75 55,75 C 55,75 40,60 25,45 Z" stroke="var(--accent-rose)" stroke-width="1.5" />
+                      <path d="M 105,42 Q 115,25 125,45 Q 130,55 135,38 Q 140,25 145,45 Q 150,55 155,38 T 175,48" stroke="var(--text-charcoal)" stroke-width="2" />
+                      <path d="M 100,56 Q 135,57 175,54" stroke-width="0.8" opacity="0.4" stroke-dasharray="3,3" />
+                    </svg>
                   </div>
                 </div>
 
