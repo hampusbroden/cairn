@@ -155,7 +155,7 @@ function initRouting() {
   const barFill = document.querySelector('.progress-bar-fill');
   
   window.navigateTo = function(screenNum) {
-    if (screenNum < 0 || screenNum > 6) return;
+    if (screenNum < 0 || screenNum > 7) return;
     
     const appShell = document.getElementById('app-shell');
     const headerBar = document.querySelector('.header-bar');
@@ -197,6 +197,10 @@ function initRouting() {
         if (mainView) mainView.style.display = 'block';
         if (dashView) dashView.style.display = 'none';
       }
+    } else if (screenNum === 7) {
+      appShell.className = 'print-signage-wrapper';
+      headerBar.style.display = 'none';
+      if (hostControlBar) hostControlBar.style.display = 'none';
     } else if (screenNum >= 5) {
       appShell.className = 'guest-frame-desktop-wrapper';
       headerBar.style.display = 'none';
@@ -1643,3 +1647,77 @@ function compileWebBundleOfflineHTML() {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 }
+
+// ==================== PRINTABLE QR SIGNAGE VIEW NAVIGATION ====================
+window.openPrintSignage = function() {
+  state.lastScreenBeforePrint = state.activeScreen;
+  
+  const gb = state.hostGuestbooks[0] || state.hostConfig;
+  
+  const titleEl = document.getElementById('signage-event-title');
+  const dateEl = document.getElementById('signage-event-date');
+  const footerEl = document.querySelector('.signage-footer p');
+  
+  if (titleEl) {
+    titleEl.innerText = getEventDisplayNameForGb(gb);
+  }
+  if (dateEl) {
+    if (gb.date) {
+      try {
+        const parsedDate = new Date(gb.date);
+        dateEl.innerText = parsedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      } catch(e) {
+        dateEl.innerText = gb.date;
+      }
+    } else {
+      dateEl.innerText = "";
+    }
+  }
+  if (footerEl) {
+    const slug = getEventDisplayNameForGb(gb).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    footerEl.innerText = `cairn.guestbook/${slug}`;
+  }
+  
+  // Inherit the active event theme fonts
+  const card = document.getElementById('signage-print-content');
+  if (card) {
+    const selectedFont = state.hostConfig.vibes.fontFamily || 'newsreader';
+    const fontName = FONTS.serif[selectedFont] || FONTS.sans[selectedFont] || FONTS.serif['newsreader'];
+    card.style.fontFamily = fontName;
+    
+    const titleHeader = card.querySelector('#signage-event-title');
+    if (titleHeader) {
+      if (FONTS.serif[selectedFont]) {
+        titleHeader.className = 'serif-display';
+      } else {
+        titleHeader.className = '';
+      }
+    }
+  }
+  
+  // Inherit active event theme color variables
+  const currentPalKey = state.hostConfig.vibes.palette;
+  const pal = currentPalKey === 'custom' ? {
+    bg: state.hostConfig.vibes.customColors.bg,
+    surface: '#FFFFFF',
+    text: '#1F1B16',
+    taupe: '#A89A8A',
+    accent: '#C9A19A'
+  } : (PALETTES[currentPalKey] || PALETTES['cairn-cream']);
+  
+  if (card) {
+    card.style.setProperty('--bg-cream', pal.bg);
+    card.style.setProperty('--surface-white', pal.surface);
+    card.style.setProperty('--text-charcoal', pal.text);
+    card.style.setProperty('--text-taupe', pal.taupe);
+    card.style.setProperty('--accent-rose', pal.accent);
+  }
+  
+  navigateTo(7);
+};
+
+window.closePrintSignage = function() {
+  const returnScreen = state.lastScreenBeforePrint !== undefined ? state.lastScreenBeforePrint : 0;
+  navigateTo(returnScreen);
+};
+

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cairn — AI-generated digital guestbook</title>
-  <link rel="stylesheet" href="style.css?v=1.2">
+  <link rel="stylesheet" href="style.css?v=1.3">
 </head>
 <body>
 
@@ -320,8 +320,9 @@
                 <button class="btn btn-primary" onclick="navigateTo(5)">Open Live Guestbook Feed</button>
                 <div style="display:flex; gap:10px;">
                   <button class="btn btn-secondary" style="flex:1;" onclick="navigateTo(4)">Edit Design</button>
-                  <button class="btn btn-secondary" style="flex:1;" onclick="openKeepsakeDownloadModal()">Compile Keepsake</button>
+                  <button class="btn btn-secondary" style="flex:1;" onclick="openPrintSignage()">Print Table Sign</button>
                 </div>
+                <button class="btn btn-secondary" style="width:100%;" onclick="openKeepsakeDownloadModal()">Compile &amp; Download Keepsake</button>
               </div>
             </div>
 
@@ -876,6 +877,7 @@
           <div class="host-feed-control-bar" id="host-feed-control-header" style="display: none; justify-content: space-between; align-items: center; padding: 10px 16px; background: rgba(255, 255, 255, 0.95); border-bottom: 1px solid var(--border-light); z-index: 100; position: relative;">
             <span style="font-size: 11px; font-weight: 700; color: var(--text-charcoal); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-sans);">Host Control Panel</span>
             <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 10px; border-radius: 12px; font-family: var(--font-sans); margin-bottom: 0;" onclick="openPrintSignage()">Print QR Sign</button>
               <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 10px; border-radius: 12px; font-family: var(--font-sans); margin-bottom: 0;" onclick="openKeepsakeDownloadModal()">Download Keepsake</button>
               <button class="btn btn-primary" style="padding: 6px 12px; font-size: 10px; border-radius: 12px; font-family: var(--font-sans); background: var(--text-charcoal); color: #fff; margin-bottom: 0;" onclick="navigateTo(0)">Dashboard</button>
             </div>
@@ -980,6 +982,112 @@
             </div>
           </div>
           
+      </section>
+
+      <!-- ==================== SCREEN 7: PRINTABLE EVENT SIGNAGE ==================== -->
+      <section id="screen-7" class="screen-view">
+        
+        <!-- Print / Navigation Bar (Hidden on print) -->
+        <div class="print-actions-bar no-print" style="max-width: 520px; margin: 20px auto; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--surface-white); border: 1px solid var(--border-light); border-radius: 12px; box-shadow: 0 4px 12px rgba(31,27,22,0.04);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-charcoal)" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <button class="btn-text" style="font-weight:600; color:var(--text-charcoal); margin:0;" onclick="closePrintSignage()">Back</button>
+          </div>
+          <button class="btn btn-primary" style="margin:0; padding: 8px 16px; font-size:12px; background:var(--text-charcoal); color:#fff;" onclick="window.print()">Print Signage</button>
+        </div>
+
+        <!-- The actual printable sign card -->
+        <div class="print-signage-card" id="signage-print-content">
+          <!-- Double border for elegant editorial presentation -->
+          <div class="print-signage-inner">
+            
+            <div class="signage-brand">
+              <svg class="logo-icon" viewBox="0 0 24 24" fill="none" style="width: 32px; height: 32px; margin-bottom: 8px;">
+                <path d="M7 6C7 4.89543 9.23858 4 12 4C14.7614 4 17 4.89543 17 6C17 7.10457 14.7614 8 12 8C9.23858 8 7 7.10457 7 6Z" fill="var(--text-charcoal)"/>
+                <path d="M4 11C4 9.34315 7.58172 8 12 8C16.4183 8 20 9.34315 20 11C20 12.6569 16.4183 14 12 14C7.58172 14 4 12.6569 4 11Z" fill="var(--text-taupe)" opacity="0.6"/>
+                <path d="M2 17.5C2 15.2909 6.47715 13.5 12 13.5C17.5228 13.5 22 15.2909 22 17.5C22 19.7091 17.5228 21.5 12 21.5C6.47715 21.5 2 19.7091 2 17.5Z" fill="var(--text-charcoal)"/>
+              </svg>
+              <span class="logo-text" style="font-size: 16px; font-weight: 300; letter-spacing: 0.15em; color: var(--text-charcoal); font-family: var(--font-serif); margin-top: 4px;">CAIRN</span>
+            </div>
+            
+            <div class="signage-event-details" style="margin-top: 16px; margin-bottom: 12px;">
+              <h1 id="signage-event-title" class="serif-display">Anna &amp; Erik</h1>
+              <p id="signage-event-date" class="signage-date">June 15, 2026</p>
+            </div>
+            
+            <div class="signage-divider"></div>
+            
+            <div class="signage-call-to-action">
+              <h2 class="serif-display" style="font-size: 22px; font-weight: 400; margin-bottom: 12px; color: var(--text-charcoal);">Sign Our Digital Guestbook</h2>
+              <p style="font-size: 13px; color: var(--text-charcoal); opacity: 0.8; max-width: 320px; line-height: 1.5; margin: 0 auto 20px auto; font-family: var(--font-sans); font-weight: 300;">
+                Scan the QR code below with your phone's camera to write stories, snap photos, or draw sketches directly for our keepsake.
+              </p>
+            </div>
+
+            <!-- The QR Display Code Frame -->
+            <div class="signage-qr-frame">
+              <div class="qr-svg-wrapper">
+                <svg width="180" height="180" viewBox="0 0 100 100" class="qr-code-svg">
+                  <!-- Top Left Anchor -->
+                  <rect x="5" y="5" width="20" height="20" rx="3" fill="var(--text-charcoal)" />
+                  <rect x="9" y="9" width="12" height="12" rx="1.5" fill="#FFF" />
+                  <rect x="12" y="12" width="6" height="6" rx="0.5" fill="var(--text-charcoal)" />
+                  
+                  <!-- Top Right Anchor -->
+                  <rect x="75" y="5" width="20" height="20" rx="3" fill="var(--text-charcoal)" />
+                  <rect x="79" y="9" width="12" height="12" rx="1.5" fill="#FFF" />
+                  <rect x="82" y="12" width="6" height="6" rx="0.5" fill="var(--text-charcoal)" />
+                  
+                  <!-- Bottom Left Anchor -->
+                  <rect x="5" y="75" width="20" height="20" rx="3" fill="var(--text-charcoal)" />
+                  <rect x="9" y="79" width="12" height="12" rx="1.5" fill="#FFF" />
+                  <rect x="12" y="82" width="6" height="6" rx="0.5" fill="var(--text-charcoal)" />
+                  
+                  <!-- Bottom Right Alignment square -->
+                  <rect x="78" y="78" width="8" height="8" rx="1.5" fill="var(--text-charcoal)" />
+                  <rect x="80" y="80" width="4" height="4" rx="0.5" fill="#FFF" />
+                  <rect x="81" y="81" width="2" height="2" rx="0.2" fill="var(--text-charcoal)" />
+
+                  <!-- Dense mock data pattern dots -->
+                  <path d="M30 6h4v2h-4zm8 0h2v4h-2zm6 0h8v2h-8zm10 0h4v2h-4zm-22 4h4v2h-4zm10 0h6v2h-6zm12 0h2v4h-2zm-20 4h12v2H30zm18 0h6v2h-6zm8 0h4v2h-4zm-26 4h4v2h-4zm14 0h6v2h-6zm8 0h4v2h-4zm12 0h6v2h-6zm-40 4h8v2h-8zm12 0h4v2h-4zm10 0h2v4h-2zm12 0h4v2h-4zm-38 4h4v2h-4zm12 0h8v2h-8zm16 0h4v2h-4zm10 0h2v4h-2zm-38 4h8v2h-8zm12 0h4v2h-4zm16 0h6v2h-6zm8 0h4v2h-4z" fill="var(--text-charcoal)" opacity="0.85"/>
+                  <path d="M5 30h4v2H5zm10 0h6v2h-6zm8 0h4v2h-4zm10 0h8v2h-8zm14 0h4v2h-4zm16 0h6v2h-6zm-58 4h12v2H5zm16 0h4v2h-4zm8 0h6v2h-6zm12 0h2v4h-2zm12 0h4v2h-4zm-48 4h4v2H5zm14 0h6v2h-6zm10 0h4v2h-4zm12 0h8v2H35zm18 0h6v2h-6zm-58 4h8v2H5zm12 0h4v2h-4zm10 0h6v2h-6zm18 0h4v2h-4zm10 0h8v2h-8zm-54 4h4v2H9zm10 0h6v2h-6zm14 0h8v2h-8zm12 0h4v2h-4zm10 0h6v2h-6z" fill="var(--text-charcoal)" opacity="0.85"/>
+                  <path d="M30 50h8v2h-8zm12 0h4v2h-4zm10 0h6v2h-6zm12 0h4v2h-4zm14 0h8v2h-8zm-48 4h4v2h-4zm12 0h6v2h-6zm10 0h2v4h-2zm12 0h8v2h-8zm12 0h4v2h-4zm-48 8h10v2H30zm16 0h4v2h-4zm12 0h6v2h-6zm18 0h8v2h-8zm-46 4h4v2h-4zm12 0h6v2h-6zm12 0h4v2h-4zm12 0h8v2h-8zm12 0h2v4H82z" fill="var(--text-charcoal)" opacity="0.85"/>
+                  <path d="M30 65h6v2h-6zm10 0h4v2h-4zm14 0h8v2h-8zm12 0h6v2h-6zm12 0h4v2h-4zm-48 4h12v2H30zm16 0h4v2h-4zm10 0h6v2h-6zm12 0h2v4h-2zm12 0h4v2h-4z" fill="var(--text-charcoal)" opacity="0.85"/>
+
+                  <!-- Logo anchor in center -->
+                  <rect x="42" y="42" width="16" height="16" rx="4" fill="#FFFFFF" stroke="var(--text-charcoal)" stroke-width="1.2" />
+                  <path d="M47 54 C47 53.5 49 53 50 53 C51 53 53 53.5 53 54 Z" fill="var(--text-charcoal)" />
+                  <path d="M46 51 C46 50 49 49.5 50 49.5 C51 49.5 54 50 54 51 Z" fill="var(--text-taupe)" />
+                  <path d="M48 47.5 C48 47 49 46.5 50 46.5 C51 46.5 52 47 52 47.5 Z" fill="var(--text-charcoal)" />
+                </svg>
+              </div>
+              <div class="qr-scan-label">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:2px;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Scan with Camera</span>
+              </div>
+            </div>
+
+            <!-- Steps list -->
+            <div class="signage-steps">
+              <div class="signage-step">
+                <div class="step-num">1</div>
+                <div class="step-text">Scan QR</div>
+              </div>
+              <div class="signage-step">
+                <div class="step-num">2</div>
+                <div class="step-text">Write or Sketch</div>
+              </div>
+              <div class="signage-step">
+                <div class="step-num">3</div>
+                <div class="step-text">Submit Stone</div>
+              </div>
+            </div>
+            
+            <div class="signage-footer">
+              <p style="font-family: var(--font-sans); margin:0;">cairn.guestbook/anna-erik</p>
+            </div>
+
+          </div>
         </div>
       </section>
 
