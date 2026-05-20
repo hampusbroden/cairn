@@ -147,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initVibeGenerator();
   renderPreview();
   renderGuestFeed();
+  navigateTo(0); // Ensure initial routing state is synced
 });
 
 // View Navigation & State Machine Router
