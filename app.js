@@ -157,6 +157,13 @@ function initRouting() {
   window.navigateTo = function(screenNum) {
     if (screenNum < 0 || screenNum > 7) return;
     
+    // Sync cover photo to active screen images
+    if (state.hostConfig && state.hostConfig.vibes && state.hostConfig.vibes.heroPhoto) {
+      document.querySelectorAll('.guest-hero-image').forEach(img => {
+        img.src = state.hostConfig.vibes.heroPhoto;
+      });
+    }
+    
     const appShell = document.getElementById('app-shell');
     const headerBar = document.querySelector('.header-bar');
     const hostControlBar = document.getElementById('host-feed-control-header');
@@ -524,7 +531,28 @@ function renderPreview() {
   if (introEditInput && (introEditInput.value === '' || introEditInput.value === 'Welcome — leave a stone for our cairn')) {
     introEditInput.value = state.hostConfig.vibes.introMessage;
   }
+  
+  syncFontPickerPreviewText();
 }
+
+function syncFontPickerPreviewText() {
+  const nameInput = document.getElementById('refine-names-edit');
+  const introInput = document.getElementById('refine-intro-edit');
+  
+  const nameVal = nameInput ? nameInput.value : (state.hostConfig.partner1 + (state.hostConfig.partner2 ? ` & ${state.hostConfig.partner2}` : ''));
+  const introVal = introInput ? introInput.value : state.hostConfig.vibes.introMessage;
+  
+  // Serif font tiles should show the event name(s)
+  document.querySelectorAll('.font-picker-serif .font-opt-preview').forEach(el => {
+    el.innerText = nameVal;
+  });
+  
+  // Sans font tiles should show the intro message
+  document.querySelectorAll('.font-picker-sans .font-opt-preview').forEach(el => {
+    el.innerText = introVal;
+  });
+}
+
 
 // Custom Font Selectors in Screen 4 Refinement panel
 function setupFontPicker() {
@@ -651,6 +679,8 @@ function updateRefinedCopy() {
   } else {
     state.hostConfig.partner1 = nameVal.trim();
   }
+  
+  syncFontPickerPreviewText();
 }
 // Wire up refinement text inputs
 setTimeout(() => {
@@ -808,6 +838,14 @@ window.handleVibePhotosUpload = function(input) {
       img.src = e.target.result;
       img.alt = 'Uploaded inspiration photo';
       container.appendChild(img);
+      
+      // Save primary uploaded photo in hostConfig and update previews in DOM
+      if (i === 0) {
+        state.hostConfig.vibes.heroPhoto = e.target.result;
+        document.querySelectorAll('.guest-hero-image').forEach(heroImg => {
+          heroImg.src = e.target.result;
+        });
+      }
     };
     reader.readAsDataURL(file);
   }
