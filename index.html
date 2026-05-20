@@ -185,6 +185,91 @@
             </div>
           </div>
 
+          <!-- Interactive Theme Sandbox Section -->
+          <div class="theme-sandbox-section" style="margin-top: 80px; border-top: 1px solid var(--border-light); padding-top: 60px; margin-bottom: 60px;">
+            <div class="theme-sandbox-grid" style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; align-items: center;">
+              
+              <div class="theme-sandbox-intro">
+                <span class="uppercase-label tag-accent">Visual Styles Explorer</span>
+                <h2 class="serif-display" style="font-size: 2.6rem; line-height: 1.2; margin-top: 10px; margin-bottom: 20px; font-weight: 300;">Experience our curation of Nordic color palettes.</h2>
+                <p style="font-size: 15px; color: var(--text-taupe); line-height: 1.7; margin-bottom: 30px; font-family: var(--font-sans); font-weight: 300;">
+                  Cairn automatically pairs typography scale, card accents, and backdrops to match your desired mood. Select a color chip below to instantly preview the selected theme in the interactive live card.
+                </p>
+                
+                <!-- Color Chips Switcher -->
+                <div class="sandbox-theme-toggles" style="display: flex; flex-direction: column; gap: 12px; max-width: 420px;">
+                  <button class="sandbox-toggle-btn active" data-theme="cairn-cream" onclick="changeSandboxTheme('cairn-cream')">
+                    <span class="color-dot" style="background: #F8F5F0; border: 1px solid #e1dbd2;"></span>
+                    <span class="theme-name">Cairn Cream</span>
+                    <span class="theme-desc" style="font-size: 11px; color: var(--text-taupe); margin-left: auto; font-weight: 500;">Warm & Editorial</span>
+                  </button>
+                  <button class="sandbox-toggle-btn" data-theme="nordic-slate" onclick="changeSandboxTheme('nordic-slate')">
+                    <span class="color-dot" style="background: #F4F6F6; border: 1px solid #dcdede;"></span>
+                    <span class="theme-name">Nordic Slate</span>
+                    <span class="theme-desc" style="font-size: 11px; color: var(--text-taupe); margin-left: auto; font-weight: 500;">Cool & Contemporary</span>
+                  </button>
+                  <button class="sandbox-toggle-btn" data-theme="forest-mist" onclick="changeSandboxTheme('forest-mist')">
+                    <span class="color-dot" style="background: #F0F4F1; border: 1px solid #d9e0da;"></span>
+                    <span class="theme-name">Forest Mist</span>
+                    <span class="theme-desc" style="font-size: 11px; color: var(--text-taupe); margin-left: auto; font-weight: 500;">Organic & Ethereal</span>
+                  </button>
+                  <button class="sandbox-toggle-btn" data-theme="muted-apricot" onclick="changeSandboxTheme('muted-apricot')">
+                    <span class="color-dot" style="background: #FAF5F0; border: 1px solid #f2e7db;"></span>
+                    <span class="theme-name">Muted Apricot</span>
+                    <span class="theme-desc" style="font-size: 11px; color: var(--text-taupe); margin-left: auto; font-weight: 500;">Soft & Nostalgic</span>
+                  </button>
+                  <button class="sandbox-toggle-btn" data-theme="midnight-minimal" onclick="changeSandboxTheme('midnight-minimal')">
+                    <span class="color-dot" style="background: #141311; border: 1px solid #2e2c29;"></span>
+                    <span class="theme-name">Midnight Minimal</span>
+                    <span class="theme-desc" style="font-size: 11px; color: var(--text-taupe); margin-left: auto; font-weight: 500;">Striking & Moody</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- The Interactive Live Viewport -->
+              <div class="sandbox-mock-viewport" id="sandbox-viewport" style="background-color: #F8F5F0; --bg-cream: #F8F5F0; --surface-white: #FFFFFF; --text-charcoal: #1F1B16; --text-taupe: #A89A8A; --accent-rose: #C9A19A; border: 1px solid rgba(234, 229, 221, 0.7); border-radius: 20px; padding: 24px; box-shadow: 0 20px 40px rgba(31, 27, 22, 0.05); transition: background-color 0.4s ease; display: flex; flex-direction: column; gap: 16px; width: 100%;">
+                
+                <div class="sandbox-mock-header" style="text-align: center; border-bottom: 1px solid rgba(234, 229, 221, 0.6); padding-bottom: 12px; margin-bottom: 4px;">
+                  <span style="font-family: var(--font-sans); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-taupe); font-weight: 600;">Sofia &amp; Erik's Guestbook</span>
+                </div>
+                
+                <!-- Mock card 1 (Text) -->
+                <div class="sandbox-mock-card" style="background-color: var(--surface-white); border-radius: 8px; padding: 14px; box-shadow: 0 4px 12px rgba(31, 27, 22, 0.02); border: 1px solid rgba(234, 229, 221, 0.3); transition: all 0.4s ease; display: flex; flex-direction: column; gap: 10px;">
+                  <div class="card-header" style="display: flex; gap: 8px; align-items: center;">
+                    <div class="guest-avatar" style="background: var(--accent-rose); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; font-family: var(--font-sans);">SH</div>
+                    <div class="guest-meta" style="display: flex; flex-direction: column;">
+                      <span class="guest-name" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-charcoal);">Sofia Hedlund</span>
+                      <span class="card-time" style="font-family: var(--font-sans); font-size: 8px; color: var(--text-taupe);">10 minutes ago</span>
+                    </div>
+                  </div>
+                  
+                  <p class="card-body-text" style="font-family: var(--font-serif); font-style: italic; font-size: 13px; line-height: 1.5; color: var(--text-charcoal); margin: 0;">
+                    "Dearest Anna & Erik, your ceremony in Mariefred was breathtaking. So honored to share this magic evening with you! ♥"
+                  </p>
+                </div>
+
+                <!-- Mock card 2 (Scribble Draw) -->
+                <div class="sandbox-mock-card" style="background-color: var(--surface-white); border-radius: 8px; padding: 14px; box-shadow: 0 4px 12px rgba(31, 27, 22, 0.02); border: 1px solid rgba(234, 229, 221, 0.3); transition: all 0.4s ease; display: flex; flex-direction: column; gap: 8px;">
+                  <div class="card-header" style="display: flex; gap: 8px; align-items: center;">
+                    <div class="guest-avatar" style="background: var(--text-taupe); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; font-family: var(--font-sans);">AV</div>
+                    <div class="guest-meta" style="display: flex; flex-direction: column;">
+                      <span class="guest-name" style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-charcoal);">Anders V.</span>
+                      <span class="card-time" style="font-family: var(--font-sans); font-size: 8px; color: var(--text-taupe);">1 hour ago</span>
+                    </div>
+                  </div>
+                  <div style="background-color: var(--bg-cream); border-radius: 4px; border: 1px solid rgba(234, 229, 221, 0.7); display: flex; align-items: center; justify-content: center; height: 60px; overflow: hidden; padding: 4px; transition: background-color 0.4s ease;">
+                    <!-- Drawn Heart SVG -->
+                    <svg viewBox="0 0 200 60" width="100%" height="60" stroke="var(--text-charcoal)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" style="transition: stroke 0.3s ease;">
+                      <path d="M 40,30 C 30,12 60,8 70,25 C 80,8 110,12 100,30 C 85,43 70,55 70,55 C 70,55 55,43 40,30 Z" stroke="var(--accent-rose)" stroke-width="1.5" />
+                      <path d="M 120,28 Q 130,15 140,30 T 160,30" stroke="var(--text-charcoal)" stroke-width="2" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
 
         <!-- Host Dashboard View (swapped within Screen 0 if host logged in) -->

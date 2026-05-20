@@ -2009,6 +2009,65 @@ input:checked + .switch-slider:before {
   }
 }
 
+/* Theme Sandbox Styling */
+.sandbox-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface-white);
+  border: 1px solid var(--border-light);
+  padding: 12px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-charcoal);
+  text-align: left;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(31, 27, 22, 0.02);
+}
+
+.sandbox-toggle-btn:hover {
+  border-color: var(--text-taupe);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(31, 27, 22, 0.05);
+}
+
+.sandbox-toggle-btn.active {
+  border-color: var(--text-charcoal);
+  background-color: var(--surface-white);
+  box-shadow: 0 8px 20px rgba(31, 27, 22, 0.08);
+}
+
+.sandbox-toggle-btn .color-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sandbox-toggle-btn .theme-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-charcoal);
+}
+
+.sandbox-toggle-btn .theme-desc {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-taupe);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .theme-sandbox-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
 /* ==================== PRINT MEDIA STYLES ==================== */
 @media print {
   body {

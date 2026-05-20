@@ -593,6 +593,29 @@ function applySelectedPaletteToPreview(palKey) {
   });
 }
 
+// Interactive Theme Switcher for Marketing Sandbox
+window.changeSandboxTheme = function(themeKey) {
+  const pal = PALETTES[themeKey];
+  if (!pal) return;
+  
+  const vp = document.getElementById('sandbox-viewport');
+  if (vp) {
+    vp.style.setProperty('--bg-cream', pal.bg);
+    vp.style.setProperty('--surface-white', pal.surface);
+    vp.style.setProperty('--text-charcoal', pal.text);
+    vp.style.setProperty('--text-taupe', pal.taupe);
+    vp.style.setProperty('--accent-rose', pal.accent);
+  }
+  
+  document.querySelectorAll('.sandbox-toggle-btn').forEach(btn => {
+    if (btn.getAttribute('data-theme') === themeKey) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+};
+
 // Update text items in real-time in refinement panel
 function updateRefinedCopy() {
   const nameVal = document.getElementById('refine-names-edit').value;
