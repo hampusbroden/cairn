@@ -470,16 +470,57 @@
             </div>
             
             <div class="pref-box">
-              <span class="pref-box-title">Keepsake Output</span>
-              <div style="display:flex; flex-direction:column; gap:12px;">
-                <label style="display:flex; gap:10px; font-size:13px; align-items:center; cursor:pointer;">
-                  <input type="radio" name="output-mode" value="web" style="accent-color: var(--text-charcoal);">
-                  <span>Web keepsake only (36 months archive)</span>
-                </label>
-                <label style="display:flex; gap:10px; font-size:13px; align-items:center; cursor:pointer;">
-                  <input type="radio" name="output-mode" value="web-print" checked style="accent-color: var(--text-charcoal);">
-                  <span>Web keepsake + Printed custom book</span>
-                </label>
+              <span class="pref-box-title">Keepsake Output Options</span>
+              <div style="display:flex; flex-direction:column; gap:16px;">
+                
+                <!-- Web Keepsake (Default) -->
+                <div style="display: flex; justify-content: space-between; align-items: center; opacity: 0.8;">
+                  <div>
+                    <div style="font-size: 13px; font-weight:600; color: var(--text-charcoal);">Web Keepsake</div>
+                    <div style="font-size: 11px; color: var(--text-taupe);">Standard digital guestbook archive hosted online.</div>
+                  </div>
+                  <label class="custom-switch" style="cursor: not-allowed;">
+                    <input type="checkbox" checked disabled id="keep-web">
+                    <span class="switch-slider" style="background-color: var(--text-charcoal); opacity: 0.5;"></span>
+                  </label>
+                </div>
+
+                <!-- Downloadable PDF -->
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-size: 13px; font-weight:600; color: var(--text-charcoal);">Downloadable PDF Album</div>
+                    <div style="font-size: 11px; color: var(--text-taupe);">Print-ready digital album with messages & video QR codes.</div>
+                  </div>
+                  <label class="custom-switch">
+                    <input type="checkbox" checked id="keep-pdf" data-keepsake="pdf">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+
+                <!-- Downloadable Multimedia File -->
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-size: 13px; font-weight:600; color: var(--text-charcoal);">Downloadable Multimedia File</div>
+                    <div style="font-size: 11px; color: var(--text-taupe);">Stitched MP4 reel combining guest video & scribble entries.</div>
+                  </div>
+                  <label class="custom-switch">
+                    <input type="checkbox" checked id="keep-mp4" data-keepsake="mp4">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+
+                <!-- Physical Photo Album -->
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-size: 13px; font-weight:600; color: var(--text-charcoal);">Physical Photo Album</div>
+                    <div style="font-size: 11px; color: var(--text-taupe);">Linen-bound printed coffee table book of guestbooks.</div>
+                  </div>
+                  <label class="custom-switch">
+                    <input type="checkbox" checked id="keep-physical" data-keepsake="physical">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+
               </div>
             </div>
 
@@ -985,7 +1026,7 @@
       <div class="download-options-list" style="display:flex; flex-direction:column; gap:12px;">
         
         <!-- Option 1: PDF -->
-        <div class="download-option-item" onclick="handleKeepsakeDownload('pdf')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
+        <div class="download-option-item" id="download-item-pdf" onclick="handleKeepsakeDownload('pdf')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
           <div class="download-icon-box" style="color:var(--accent-rose); display:flex; align-items:center;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -1001,7 +1042,7 @@
         </div>
 
         <!-- Option 2: Web Bundle -->
-        <div class="download-option-item" onclick="handleKeepsakeDownload('webbundle')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
+        <div class="download-option-item" id="download-item-webbundle" onclick="handleKeepsakeDownload('webbundle')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
           <div class="download-icon-box" style="color:var(--text-charcoal); display:flex; align-items:center;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
@@ -1014,7 +1055,7 @@
         </div>
 
         <!-- Option 3: MP4 Compilation -->
-        <div class="download-option-item" onclick="handleKeepsakeDownload('mp4')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
+        <div class="download-option-item" id="download-item-mp4" onclick="handleKeepsakeDownload('mp4')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
           <div class="download-icon-box" style="color:var(--text-taupe); display:flex; align-items:center;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M23 7l-7 5 7 5V7z"/>
@@ -1025,6 +1066,25 @@
             <h4 class="download-option-title" style="font-size:13px; font-weight:700; margin:0 0 4px 0; color:var(--text-charcoal);">Video Keepsake Reel (.MP4)</h4>
             <p class="download-option-desc" style="font-size:11px; color:var(--text-taupe); margin:0; line-height:1.4;">An automated movie compiling guest photos, drawings, and playing video greetings back-to-back.</p>
           </div>
+        </div>
+
+        <!-- Option 4: Physical Photo Album -->
+        <div class="download-option-item" id="download-item-physical" onclick="handleKeepsakeDownload('physical')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
+          <div class="download-icon-box" style="color:#8c7e6c; display:flex; align-items:center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <div class="download-option-info">
+            <h4 class="download-option-title" style="font-size:13px; font-weight:700; margin:0 0 4px 0; color:var(--text-charcoal);">Physical Photo Album</h4>
+            <p class="download-option-desc" style="font-size:11px; color:var(--text-taupe); margin:0; line-height:1.4;">Order a professionally printed, linen-bound custom coffee table book of your guestbook pages.</p>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="download-empty-keepsakes" style="display:none; text-align:center; padding:32px 16px; color:var(--text-taupe); font-size:12px; font-family:var(--font-sans); line-height:1.5;">
+          No downloadable keepsake formats are currently enabled in your guestbook settings.
         </div>
 
       </div>

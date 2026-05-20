@@ -23,7 +23,12 @@ const state = {
       requireName: true,
       requirePhoto: false
     },
-    output: 'web-print', // web, web-print
+    keepsakeOutputs: {
+      web: true,
+      pdf: true,
+      mp4: true,
+      physical: true
+    },
     vibes: {
       moods: ['minimal', 'editorial', 'warm', 'classic'],
       palette: 'cairn-cream',
@@ -378,12 +383,16 @@ function initFormInteractivity() {
     });
   });
   
-  // Screen 2: Output selection
-  const outputRadios = document.getElementsByName('output-mode');
-  outputRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (radio.checked) {
-        state.hostConfig.output = radio.value;
+  // Screen 2: Keepsake Outputs toggles
+  const keepsakeSwitches = document.querySelectorAll('#screen-2 input[data-keepsake]');
+  keepsakeSwitches.forEach(sw => {
+    sw.addEventListener('change', () => {
+      const field = sw.dataset.keepsake;
+      state.hostConfig.keepsakeOutputs[field] = sw.checked;
+      
+      // Update Keepsake Download Modal layout in real-time
+      if (window.syncKeepsakeDownloadModalOptions) {
+        window.syncKeepsakeDownloadModalOptions();
       }
     });
   });
@@ -1295,6 +1304,55 @@ window.handleSignOut = function() {
 };
 
 // Keepsake Compile & Download Modal Dialog Controllers
+window.syncKeepsakeDownloadModalOptions = function() {
+  if (!state.hostConfig.keepsakeOutputs) return;
+  const pdfEnabled = state.hostConfig.keepsakeOutputs.pdf;
+  const mp4Enabled = state.hostConfig.keepsakeOutputs.mp4;
+  const physicalEnabled = state.hostConfig.keepsakeOutputs.physical;
+  
+  const itemPdf = document.getElementById('download-item-pdf');
+  const itemMp4 = document.getElementById('download-item-mp4');
+  const itemPhysical = document.getElementById('download-item-physical');
+  const emptyState = document.getElementById('download-empty-keepsakes');
+  
+  let visibleCount = 0;
+  
+  if (itemPdf) {
+    if (pdfEnabled) {
+      itemPdf.style.display = 'flex';
+      visibleCount++;
+    } else {
+      itemPdf.style.display = 'none';
+    }
+  }
+  
+  if (itemMp4) {
+    if (mp4Enabled) {
+      itemMp4.style.display = 'flex';
+      visibleCount++;
+    } else {
+      itemMp4.style.display = 'none';
+    }
+  }
+  
+  if (itemPhysical) {
+    if (physicalEnabled) {
+      itemPhysical.style.display = 'flex';
+      visibleCount++;
+    } else {
+      itemPhysical.style.display = 'none';
+    }
+  }
+  
+  if (emptyState) {
+    if (visibleCount === 0) {
+      emptyState.style.display = 'block';
+    } else {
+      emptyState.style.display = 'none';
+    }
+  }
+};
+
 window.openKeepsakeDownloadModal = function() {
   const downloadDialog = document.getElementById('download-keepsake-dialog');
   if (downloadDialog) downloadDialog.classList.add('active');
@@ -1302,6 +1360,8 @@ window.openKeepsakeDownloadModal = function() {
   // Hide compiling loader progress meter initially
   const loader = document.getElementById('compiler-loader');
   if (loader) loader.style.display = 'none';
+  
+  syncKeepsakeDownloadModalOptions();
 };
 
 window.closeKeepsakeDownloadModal = function() {
@@ -1362,6 +1422,42 @@ window.handleKeepsakeDownload = function(format) {
         }, 500);
       }
     }, 50);
+  } else if (format === 'physical') {
+    // Simulating physical book print preparation sequence
+    const loader = document.getElementById('compiler-loader');
+    const bar = document.getElementById('compiler-loader-bar');
+    const percent = document.getElementById('compiler-loader-percent');
+    const text = document.getElementById('compiler-loader-text');
+    
+    if (loader) loader.style.display = 'flex';
+    
+    let progress = 0;
+    const phases = [
+      'Assembling high-res print signatures...',
+      'Optimizing color profiles for press...',
+      'Calculating bleed and margins...',
+      'Formatting linen cover foil stamp...',
+      'Queuing print job to press...'
+    ];
+    
+    const interval = setInterval(() => {
+      progress += 4;
+      if (bar) bar.style.width = `${progress}%`;
+      if (percent) percent.innerText = `${progress}%`;
+      
+      const phaseIdx = Math.min(Math.floor((progress / 100) * phases.length), phases.length - 1);
+      if (text && phases[phaseIdx]) {
+        text.innerText = phases[phaseIdx];
+      }
+      
+      if (progress >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          alert("Your Linen-Bound Physical Photo Album has been prepared and queued! We've sent a verification link to your email to confirm shipping details and finalize your custom layout.");
+          closeKeepsakeDownloadModal();
+        }, 500);
+      }
+    }, 80);
   }
 };
 
