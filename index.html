@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cairn — AI-generated digital guestbook</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="app-shell">
+    
+    <!-- Top Header & Brand Flow Bar (Screens 1 to 4) -->
+    <header class="header-bar">
+      <div class="logo-container">
+        <!-- Abstract Stack of Stones SVG Logo -->
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Top Stone -->
+          <path d="M7 6C7 4.89543 9.23858 4 12 4C14.7614 4 17 4.89543 17 6C17 7.10457 14.7614 8 12 8C9.23858 8 7 7.10457 7 6Z" fill="#1F1B16"/>
+          <!-- Middle Stone -->
+          <path d="M4 11C4 9.34315 7.58172 8 12 8C16.4183 8 20 9.34315 20 11C20 12.6569 16.4183 14 12 14C7.58172 14 4 12.6569 4 11Z" fill="#A89A8A"/>
+          <!-- Bottom Stone -->
+          <path d="M2 17.5C2 15.2909 6.47715 13.5 12 13.5C17.5228 13.5 22 15.2909 22 17.5C22 19.7091 17.5228 21.5 12 21.5C6.47715 21.5 2 19.7091 2 17.5Z" fill="#1F1B16"/>
+        </svg>
+        <span class="logo-text">cairn</span>
+      </div>
+      
+      <!-- Progress Bar (Setup Flow) -->
+      <div class="progress-indicator">
+        <span class="progress-step">Step 1 of 4</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="view-container">
+
+      <!-- ==================== SCREEN 0: LANDING PAGE & HOST DASHBOARD ==================== -->
+      <section id="screen-0" class="screen-view active">
+        
+        <!-- Guest-style wrapper or clean landing layout -->
+        <div class="landing-hero-layout" id="landing-main-view">
+          
+          <!-- Elegant Marketing Header -->
+          <div class="landing-header">
+            <div class="logo-container" onclick="navigateTo(0)" style="cursor: pointer;">
+              <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+                <path d="M7 6C7 4.89543 9.23858 4 12 4C14.7614 4 17 4.89543 17 6C17 7.10457 14.7614 8 12 8C9.23858 8 7 7.10457 7 6Z" fill="var(--text-charcoal)"/>
+                <path d="M4 11C4 9.34315 7.58172 8 12 8C16.4183 8 20 9.34315 20 11C20 12.6569 16.4183 14 12 14C7.58172 14 4 12.6569 4 11Z" fill="var(--text-taupe)" opacity="0.6"/>
+                <path d="M2 17.5C2 15.2909 6.47715 13.5 12 13.5C17.5228 13.5 22 15.2909 22 17.5C22 19.7091 17.5228 21.5 12 21.5C6.47715 21.5 2 19.7091 2 17.5Z" fill="var(--text-charcoal)"/>
+              </svg>
+              <span class="logo-text" style="color: var(--text-charcoal);">cairn</span>
+            </div>
+            <div class="landing-nav-actions" id="landing-auth-buttons">
+              <button class="btn-text" onclick="openAuthModal('signin')">Sign In</button>
+              <button class="btn btn-primary" style="padding: 8px 18px; font-size: 12px; border-radius: 20px;" onclick="openAuthModal('signup')">Create a Keepsake</button>
+            </div>
+            <div class="landing-nav-actions" id="landing-user-badge" style="display:none; align-items:center; gap:12px;">
+              <span class="host-avatar-badge" id="host-navbar-avatar">H</span>
+              <button class="btn-text" onclick="showHostDashboard()">Dashboard</button>
+              <button class="btn-text" style="color: #900;" onclick="handleSignOut()">Sign Out</button>
+            </div>
+          </div>
+
+          <!-- Hero pitch -->
+          <div class="landing-hero-grid">
+            <div class="landing-hero-content">
+              <span class="uppercase-label tag-accent">AI-Powered Keepsakes</span>
+              <h1 class="landing-headline serif-display">Stack memories,<br>stone by stone.</h1>
+              <p class="landing-intro">Create a modern, theme-aware digital guestbook for your wedding or special event. Gather text stories, sketches, hand-drawn scribbles, photos, and high-fidelity video greetings in a curated live feed. Download as a self-contained archive or print as an elegant album.</p>
+              
+              <div class="landing-ctas">
+                <button class="btn btn-primary" onclick="openAuthModal('signup')">Start Creating Your Guestbook</button>
+                <a href="#how-it-works" class="btn btn-secondary" style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none;">See How It Works</a>
+              </div>
+            </div>
+
+            <!-- Showcase previews stack -->
+            <div class="landing-showcase-pane">
+              <div class="showcase-card-stack">
+                
+                <!-- Cairn anchor illustration -->
+                <div class="showcase-card cairn-photo-card" style="top: -40px; left: 100px; transform: rotate(4deg); z-index: 4; width: 200px; padding: 10px; background:#fff;">
+                  <img src="assets/cairn_stones.png" style="width:100%; border-radius:4px; aspect-ratio:1/1; object-fit:cover; display:block;">
+                  <div style="font-size: 9px; text-transform: uppercase; color: var(--text-taupe); letter-spacing: 0.05em; margin-top: 8px; text-align: center; font-weight:600;">Built piece by piece.</div>
+                </div>
+                
+                <div class="showcase-card text-card">
+                  <div class="card-header">
+                    <div class="guest-avatar" style="background:#C9A19A;">SH</div>
+                    <div class="guest-meta">
+                      <span class="guest-name">Sofia Hedlund</span>
+                      <span class="card-time">10m ago</span>
+                    </div>
+                  </div>
+                  <p class="card-body-text">Dearest Anna & Erik, your ceremony in Mariefred was breathtaking. So honored to share this magic evening with you! ♥</p>
+                </div>
+
+                <div class="showcase-card video-card">
+                  <div class="card-header">
+                    <div class="guest-avatar" style="background:#A89A8A;">OL</div>
+                    <div class="guest-meta">
+                      <span class="guest-name">Oskar L.</span>
+                      <span class="card-time">Just now</span>
+                    </div>
+                  </div>
+                  <div class="card-body-video" style="height:120px; background:#F8F5F0; display:flex; align-items:center; justify-content:center;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text-charcoal)"><path d="M8 5v14l11-7z"/></svg>
+                    <span style="font-size:10px; margin-left:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; font-family:var(--font-sans);">Play Video Greeting</span>
+                  </div>
+                </div>
+
+                <div class="showcase-card scribble-card">
+                  <div class="card-header">
+                    <div class="guest-avatar" style="background:#D2B48C;">AV</div>
+                    <div class="guest-meta">
+                      <span class="guest-name">Anders V.</span>
+                      <span class="card-time">1h ago</span>
+                    </div>
+                  </div>
+                  <div class="card-body-scribble" style="height:80px; display:flex; align-items:center; justify-content:center; border:1px dashed var(--text-taupe); border-radius:4px; font-family:'Newsreader', serif; font-size: 20px; font-style:italic;">
+                    Congratulations!
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- How it works section -->
+          <div class="landing-features-section" id="how-it-works">
+            <h2 class="section-title serif-display" style="text-align:center; margin-bottom:40px;">Built for celebrations. Archived forever.</h2>
+            
+            <div class="features-grid">
+              <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                  </svg>
+                </div>
+                <h3 class="feature-title">AI Palette & Theme Sync</h3>
+                <p class="feature-desc">Describe your event vibe in plain language, and Cairn curates bespoke editorial themes, display serifs, and accent scales.</p>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="2" width="20" height="20" rx="2" ry="2"/>
+                    <line x1="7" y1="2" x2="7" y2="22"/>
+                    <line x1="17" y1="2" x2="17" y2="22"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <line x1="2" y1="7" x2="7" y2="7"/>
+                    <line x1="2" y1="17" x2="7" y2="17"/>
+                    <line x1="17" y1="17" x2="22" y2="17"/>
+                    <line x1="17" y1="7" x2="22" y2="7"/>
+                  </svg>
+                </div>
+                <h3 class="feature-title">Real Multi-media contribution</h3>
+                <p class="feature-desc">Guests scan a QR code at your venue to sign doodles, snap photos, write stories, or record native video messages directly from their phone browser.</p>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                </div>
+                <h3 class="feature-title">Preserved Digital Keepsakes</h3>
+                <p class="feature-desc">Download a self-contained offline website archive that plays your videos forever, or compile cards into a print-ready PDF book.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Host Dashboard View (swapped within Screen 0 if host logged in) -->
+        <div class="host-dashboard-layout" id="landing-dashboard-view" style="display: none;">
+          <div class="landing-header">
+            <div class="logo-container" onclick="navigateTo(0)" style="cursor: pointer;">
+              <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+                <path d="M7 6C7 4.89543 9.23858 4 12 4C14.7614 4 17 4.89543 17 6C17 7.10457 14.7614 8 12 8C9.23858 8 7 7.10457 7 6Z" fill="var(--text-charcoal)"/>
+                <path d="M4 11C4 9.34315 7.58172 8 12 8C16.4183 8 20 9.34315 20 11C20 12.6569 16.4183 14 12 14C7.58172 14 4 12.6569 4 11Z" fill="var(--text-taupe)" opacity="0.6"/>
+                <path d="M2 17.5C2 15.2909 6.47715 13.5 12 13.5C17.5228 13.5 22 15.2909 22 17.5C22 19.7091 17.5228 21.5 12 21.5C6.47715 21.5 2 19.7091 2 17.5Z" fill="var(--text-charcoal)"/>
+              </svg>
+              <span class="logo-text" style="color: var(--text-charcoal);">cairn</span>
+            </div>
+            <div class="landing-nav-actions" style="align-items:center; gap:12px;">
+              <span class="host-avatar-badge" id="host-dashboard-avatar">H</span>
+              <button class="btn-text" style="color: #900;" onclick="handleSignOut()">Sign Out</button>
+            </div>
+          </div>
+
+          <div class="dashboard-hero">
+            <h1 class="dashboard-title serif-display">Welcome back, <span id="host-display-name">Host</span></h1>
+            <p class="dashboard-subtitle">Manage your active cairns and compile your keepsakes.</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <!-- Active Guestbook Card -->
+            <div class="dashboard-card" id="dashboard-active-guestbook-card" style="display:none;">
+              <div class="card-status-pill">Active</div>
+              <h2 class="card-guestbook-title serif-display" id="dash-gb-title">Anna & Erik's Wedding</h2>
+              <p class="card-guestbook-date" id="dash-gb-date">June 15, 2026</p>
+              
+              <div class="dashboard-analytics-row" style="margin: 20px 0;">
+                <div class="analytic-item">
+                  <span class="analytic-num" id="dash-analytic-stones">4</span>
+                  <span class="analytic-label">Stones Gathered</span>
+                </div>
+                <div class="analytic-item">
+                  <span class="analytic-num">1</span>
+                  <span class="analytic-label">Live Video</span>
+                </div>
+                <div class="analytic-item">
+                  <span class="analytic-num" style="font-size:16px;">Public</span>
+                  <span class="analytic-label">Privacy Mode</span>
+                </div>
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <button class="btn btn-primary" onclick="navigateTo(5)">Open Live Guestbook Feed</button>
+                <div style="display:flex; gap:10px;">
+                  <button class="btn btn-secondary" style="flex:1;" onclick="navigateTo(4)">Edit Design</button>
+                  <button class="btn btn-secondary" style="flex:1;" onclick="openKeepsakeDownloadModal()">Compile Keepsake</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty State Card -->
+            <div class="dashboard-card empty-dashboard" id="dashboard-empty-state">
+              <div style="margin-bottom: 20px; color: var(--text-taupe);">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              </div>
+              <h3 style="font-family:'Newsreader', serif; font-size:20px; font-style:italic; margin-bottom:8px; color:var(--text-charcoal);">No active guestbooks yet</h3>
+              <p style="font-size:12px; color:var(--text-taupe); margin-bottom:20px; max-width:280px; margin-left:auto; margin-right:auto;">Start building your first custom event guestbook with our AI layout curating engine.</p>
+              <button class="btn btn-primary" onclick="navigateTo(1)">Create a Guestbook</button>
+            </div>
+
+            <!-- Quick settings / Profile Panel -->
+            <div class="dashboard-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <h3 style="font-family:'Newsreader', serif; font-size:18px; margin-bottom:16px; color:var(--text-charcoal);">Account Settings</h3>
+                <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+                  <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-light); padding-bottom:8px;">
+                    <span style="color:var(--text-taupe);">Email</span>
+                    <span id="host-settings-email" style="font-weight:600; color:var(--text-charcoal);">email@example.com</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-light); padding-bottom:8px;">
+                    <span style="color:var(--text-taupe);">Keepsake Archive Status</span>
+                    <span style="color:var(--text-charcoal);">Active (36 months free)</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-taupe);">Support Tier</span>
+                    <span style="color:var(--text-charcoal);">Editorial Standard</span>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-secondary" style="margin-top: 24px; font-size:11px;" onclick="navigateTo(1)">Start Another Event Setup</button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==================== SCREEN 1: EVENT SETUP - BASICS ==================== -->
+      <section id="screen-1" class="screen-view">
+        <div class="flow-layout">
+          <h1 class="flow-title serif-display">Let's create your guestbook.</h1>
+          <p class="flow-subtitle">Begin by mapping out the fundamental details of your event.</p>
+          
+          <div class="form-group">
+            <span class="form-label">Event Type</span>
+            <div class="card-grid">
+              
+              <div class="selection-card selected" data-type="wedding">
+                <!-- Arch icon -->
+                <svg class="card-icon" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path d="M4 21V10C4 5.58172 7.58172 2 12 2C16.4183 2 20 5.58172 20 10V21" stroke-linecap="round"/>
+                  <line x1="2" y1="21" x2="22" y2="21" stroke-linecap="round"/>
+                </svg>
+                <span class="card-title">Wedding</span>
+              </div>
+              
+              <div class="selection-card" data-type="birthday">
+                <!-- Cake/candle icon -->
+                <svg class="card-icon" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path d="M12 2V6M9 6H15M5 11H19M5 11V21H19V11M5 11C5 8.5 7 8 12 8C17 8 19 8.5 19 11" stroke-linecap="round"/>
+                </svg>
+                <span class="card-title">Birthday</span>
+              </div>
+              
+              <div class="selection-card" data-type="graduation">
+                <!-- Cap icon -->
+                <svg class="card-icon" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path d="M12 3L2 8L12 13L22 8L12 3Z" stroke-linejoin="round"/>
+                  <path d="M6 10V18C6 19 8.5 21 12 21C15.5 21 18 19 18 18V10" stroke-linecap="round"/>
+                  <path d="M22 8V15" stroke-linecap="round"/>
+                </svg>
+                <span class="card-title">Graduation</span>
+              </div>
+              
+              <div class="selection-card" data-type="memorial">
+                <!-- Feather icon -->
+                <svg class="card-icon" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path d="M20.2426 3.75736C18.29 1.80474 15.1242 1.80474 13.1716 3.75736L3.97918 12.9497C3.34448 13.5844 2.87116 14.3725 2.6046 15.2396L2.0152 17.1593C1.86877 17.636 2.00067 18.1527 2.35533 18.5074C2.71 18.862 3.2267 18.9939 3.70335 18.8475L5.62312 18.2581C6.49024 17.9915 7.2783 17.5182 7.913 16.8835L17.1054 7.69112" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M8 16L16 8" stroke-linecap="round"/>
+                  <path d="M2 22H22" stroke-linecap="round"/>
+                </svg>
+                <span class="card-title">Memorial</span>
+              </div>
+              
+              <div class="selection-card" data-type="anniversary">
+                <!-- Heart icon -->
+                <svg class="card-icon" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round"/>
+                </svg>
+                <span class="card-title">Anniversary</span>
+              </div>
+
+            </div>
+          </div>
+          
+          <div class="dual-input-row" id="names-input-container">
+            <!-- Dynamic name inputs will be managed by JS -->
+            <div class="form-group" id="group-partner1" style="flex:1;">
+              <label class="form-label" id="label-partner1" for="partner1">Partner One Name</label>
+              <input type="text" id="partner1" class="text-input" value="Anna" placeholder="e.g., Anna">
+            </div>
+            <div class="form-group" id="group-partner2" style="flex:1;">
+              <label class="form-label" id="label-partner2" for="partner2">Partner Two Name</label>
+              <input type="text" id="partner2" class="text-input" value="Erik" placeholder="e.g., Erik">
+            </div>
+          </div>
+          
+          <div class="datetime-row">
+            <div class="form-group">
+              <label class="form-label" for="event-date">Date of Celebration</label>
+              <input type="date" id="event-date" class="text-input" value="2026-06-15">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="event-venue">Venue / Location</label>
+              <input type="text" id="event-venue" class="text-input" value="Mariefred, Sweden" placeholder="e.g., Mariefred, Sweden">
+            </div>
+          </div>
+          
+          <div class="flow-navigation">
+            <button class="btn btn-primary" onclick="navigateTo(2)">Continue</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SCREEN 2: EVENT SETUP - CONFIGURATION ==================== -->
+      <section id="screen-2" class="screen-view">
+        <div class="flow-layout">
+          <h1 class="flow-title serif-display">Configure your keepsake.</h1>
+          <p class="flow-subtitle">Decide what content your guests can contribute, and define privacy settings.</p>
+          
+          <div class="form-group">
+            <span class="form-label">Allowed Content Types</span>
+            <div class="toggle-card-list">
+              
+              <div class="toggle-card checked" data-type="text">
+                <div class="toggle-card-info">
+                  <span class="toggle-card-title">Written Messages</span>
+                  <span class="toggle-card-desc">Guests type stories, well-wishes, and loving thoughts.</span>
+                </div>
+                <label class="custom-switch">
+                  <input type="checkbox" checked disabled>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+              
+              <div class="toggle-card checked" data-type="video">
+                <div class="toggle-card-info">
+                  <span class="toggle-card-title">Video Greetings</span>
+                  <span class="toggle-card-desc">Record direct video messages straight from the phone browser.</span>
+                </div>
+                <label class="custom-switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+              
+              <div class="toggle-card checked" data-type="scribble">
+                <div class="toggle-card-info">
+                  <span class="toggle-card-title">Hand-drawn Scribbles</span>
+                  <span class="toggle-card-desc">A digital drawing surface for signatures, sketches, and doodles.</span>
+                </div>
+                <label class="custom-switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+              
+              <div class="toggle-card checked" data-type="photo">
+                <div class="toggle-card-info">
+                  <span class="toggle-card-title">Photos</span>
+                  <span class="toggle-card-desc">Guests snap or upload photographs from the celebration.</span>
+                </div>
+                <label class="custom-switch">
+                  <input type="checkbox" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+          
+          <div class="pref-grid">
+            
+            <div class="pref-box">
+              <span class="pref-box-title">Privacy Mode</span>
+              <div class="inner-selection-list" id="privacy-list">
+                <div class="inner-selection-item selected" data-value="public">
+                  <span class="inner-title">Public Feed</span>
+                  <span class="inner-desc">All guests can scroll and view entries during the event.</span>
+                </div>
+                <div class="inner-selection-item" data-value="private">
+                  <span class="inner-title">Private Box</span>
+                  <span class="inner-desc">Entries go straight to the couple; hidden from other guests.</span>
+                </div>
+                <div class="inner-selection-item" data-value="curated">
+                  <span class="inner-title">Couple-Curated</span>
+                  <span class="inner-desc">Entries are hidden until you review and approve them.</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="pref-box">
+              <span class="pref-box-title">Guest Identity</span>
+              <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-size: 13px; font-weight:600;">Allow Anonymous Entries</div>
+                    <div style="font-size: 11px; color: var(--text-tau);">Guests can post without signing names.</div>
+                  </div>
+                  <label class="custom-switch">
+                    <input type="checkbox" data-field="allowAnonymous">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-size: 13px; font-weight:600;">Require Name</div>
+                    <div style="font-size: 11px; color: var(--text-tau);">Guests must provide a name to save items.</div>
+                  </div>
+                  <label class="custom-switch">
+                    <input type="checkbox" checked data-field="requireName">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-size: 13px; font-weight:600;">Require Photo</div>
+                    <div style="font-size: 11px; color: var(--text-tau);">Guests must take an avatar selfie before posting.</div>
+                  </div>
+                  <label class="custom-switch">
+                    <input type="checkbox" data-field="requirePhoto">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="pref-box">
+              <span class="pref-box-title">Keepsake Output</span>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <label style="display:flex; gap:10px; font-size:13px; align-items:center; cursor:pointer;">
+                  <input type="radio" name="output-mode" value="web" style="accent-color: var(--text-charcoal);">
+                  <span>Web keepsake only (36 months archive)</span>
+                </label>
+                <label style="display:flex; gap:10px; font-size:13px; align-items:center; cursor:pointer;">
+                  <input type="radio" name="output-mode" value="web-print" checked style="accent-color: var(--text-charcoal);">
+                  <span>Web keepsake + Printed custom book</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+          
+          <div class="flow-navigation">
+            <button class="btn btn-secondary" onclick="navigateTo(1)">Back</button>
+            <button class="btn btn-primary" onclick="navigateTo(3)">Continue</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SCREEN 3: VISUAL VIBE PROMPT ==================== -->
+      <section id="screen-3" class="screen-view">
+        <div class="flow-layout">
+          <h1 class="flow-title serif-display">Describe the vibe.</h1>
+          <p class="flow-subtitle">Select style keywords, palette swatches, and reference ideas to prompt the AI generator.</p>
+          
+          <!-- Mood Tag Selector Grid -->
+          <div class="form-group">
+            <span class="form-label">Style Chips</span>
+            <div class="mood-chips-grid">
+              <span class="mood-chip selected" data-mood="minimal">minimal</span>
+              <span class="mood-chip" data-mood="romantic">romantic</span>
+              <span class="mood-chip selected" data-mood="editorial">editorial</span>
+              <span class="mood-chip" data-mood="classic">classic</span>
+              <span class="mood-chip" data-mood="rustic">rustic</span>
+              <span class="mood-chip" data-mood="modern">modern</span>
+              <span class="mood-chip selected" data-mood="warm">warm</span>
+              <span class="mood-chip" data-mood="elegant">elegant</span>
+              <span class="mood-chip" data-mood="playful">playful</span>
+              <span class="mood-chip" data-mood="intimate">intimate</span>
+              <span class="mood-chip" data-mood="bohemian">bohemian</span>
+              <span class="mood-chip" data-mood="formal">formal</span>
+              <span class="mood-chip" data-mood="garden">garden</span>
+              <span class="mood-chip" data-mood="coastal">coastal</span>
+              <span class="mood-chip" data-mood="candlelit">candlelit</span>
+              <span class="mood-chip" data-mood="hand-drawn">hand-drawn</span>
+              <span class="mood-chip" data-mood="vintage">vintage</span>
+              <span class="mood-chip" data-mood="soft">soft</span>
+            </div>
+          </div>
+          
+          <!-- Color palette selectors -->
+          <div class="form-group">
+            <span class="form-label">Color Palette Swatches</span>
+            <div class="palette-row" id="palette-picker">
+              
+              <div class="palette-tile selected" data-palette="cairn-cream">
+                <div class="palette-swatch-box">
+                  <div class="palette-color" style="background:#F8F5F0;"></div>
+                  <div class="palette-color" style="background:#FFFFFF;"></div>
+                  <div class="palette-color" style="background:#C9A19A;"></div>
+                  <div class="palette-color" style="background:#1F1B16;"></div>
+                </div>
+                <span class="palette-name">Cairn Cream</span>
+              </div>
+              
+              <div class="palette-tile" data-palette="nordic-slate">
+                <div class="palette-swatch-box">
+                  <div class="palette-color" style="background:#F4F6F6;"></div>
+                  <div class="palette-color" style="background:#FFFFFF;"></div>
+                  <div class="palette-color" style="background:#D2B48C;"></div>
+                  <div class="palette-color" style="background:#2C3A3B;"></div>
+                </div>
+                <span class="palette-name">Nordic Slate</span>
+              </div>
+              
+              <div class="palette-tile" data-palette="forest-mist">
+                <div class="palette-swatch-box">
+                  <div class="palette-color" style="background:#F0F4F1;"></div>
+                  <div class="palette-color" style="background:#FFFFFF;"></div>
+                  <div class="palette-color" style="background:#E6B89C;"></div>
+                  <div class="palette-color" style="background:#2D3A31;"></div>
+                </div>
+                <span class="palette-name">Forest Mist</span>
+              </div>
+              
+              <div class="palette-tile" data-palette="muted-apricot">
+                <div class="palette-swatch-box">
+                  <div class="palette-color" style="background:#FAF5F0;"></div>
+                  <div class="palette-color" style="background:#FFFFFF;"></div>
+                  <div class="palette-color" style="background:#E3A888;"></div>
+                  <div class="palette-color" style="background:#29211C;"></div>
+                </div>
+                <span class="palette-name">Muted Apricot</span>
+              </div>
+              
+              <div class="palette-tile" data-palette="midnight-minimal">
+                <div class="palette-swatch-box">
+                  <div class="palette-color" style="background:#141311;"></div>
+                  <div class="palette-color" style="background:#1E1C1A;"></div>
+                  <div class="palette-color" style="background:#D0B58F;"></div>
+                  <div class="palette-color" style="background:#F5F5F0;"></div>
+                </div>
+                <span class="palette-name">Midnight</span>
+              </div>
+              
+              <!-- Custom color tile -->
+              <div style="position:relative;">
+                <div class="custom-picker-tile">Custom</div>
+                <input type="color" id="custom-color-picker" class="custom-color-input" value="#C9A19A">
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Inspiration photo loader placeholder -->
+          <div class="form-group">
+            <span class="form-label">Inspiration Photos (Optional)</span>
+            <div class="drag-drop-area" onclick="document.getElementById('vibe-image-input').click()">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke-linecap="round"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="M21 15L16 10L5 21" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="drag-drop-text">Drag images here or <span>browse your computer</span>.</div>
+            </div>
+            <input type="file" id="vibe-image-input" multiple accept="image/*" style="display:none;" onchange="handleVibePhotosUpload(this)">
+            <div class="image-thumbnails" id="vibe-thumbnails">
+              <img class="thumb-preview" src="assets/couple_portrait.png" alt="Mood sample">
+            </div>
+          </div>
+          
+          <!-- Open story text prompt -->
+          <div class="form-group">
+            <label class="form-label" for="vibe-text">Anything Else?</label>
+            <textarea id="vibe-text" class="text-input light-textarea" placeholder="Tell us anything we missed — a story, a feeling, a place."></textarea>
+          </div>
+          
+          <div class="flow-navigation">
+            <button class="btn btn-secondary" onclick="navigateTo(2)">Back</button>
+            <button id="btn-generate-guestbook" class="btn btn-primary" style="background-color: var(--text-charcoal); color:#FFF;">
+              Generate my guestbook
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SCREEN 4: PREVIEW & REFINEMENT ==================== -->
+      <section id="screen-4" class="screen-view">
+        <div class="preview-layout">
+          
+          <!-- Left Pane: The Phone Guestbook Simulator -->
+          <div class="mockup-pane">
+            <div class="phone-shell">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                
+                <!-- Inside Phone Banner -->
+                <div class="guest-hero-banner">
+                  <img src="assets/couple_portrait.png" class="guest-hero-image">
+                  <div class="guest-hero-overlay"></div>
+                  
+                  <div class="guest-hero-brand">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+                      <path d="M7 6C7 4.89543 9.23858 4 12 4C14.7614 4 17 4.89543 17 6C17 7.10457 14.7614 8 12 8C9.23858 8 7 7.10457 7 6Z" fill="#FFF"/>
+                      <path d="M4 11C4 9.34315 7.58172 8 12 8C16.4183 8 20 9.34315 20 11C20 12.6569 16.4183 14 12 14C7.58172 14 4 12.6569 4 11Z" fill="#FFF" opacity="0.6"/>
+                      <path d="M2 17.5C2 15.2909 6.47715 13.5 12 13.5C17.5228 13.5 22 15.2909 22 17.5C22 19.7091 17.5228 21.5 12 21.5C6.47715 21.5 2 19.7091 2 17.5Z" fill="#FFF"/>
+                    </svg>
+                    <span class="logo-text">cairn</span>
+                  </div>
+                  
+                  <div class="guest-hero-content">
+                    <h2 id="preview-guest-headline" class="guest-names serif-display">Anna & Erik</h2>
+                    <span id="preview-guest-date" class="guest-date">June 15, 2026</span>
+                    <p id="preview-guest-intro" class="guest-intro">Welcome — leave a stone for our cairn</p>
+                  </div>
+                </div>
+                
+                <!-- Mockup Scrollable Guest entries -->
+                <div class="guest-feed-container" id="mockup-guest-feed">
+                  <!-- Generated dynamically in app.js -->
+                </div>
+                
+                <!-- Mockup bottom float button -->
+                <div style="position:absolute; bottom:20px; left:0; right:0; display:flex; justify-content:center;">
+                  <button class="btn" style="background:#1F1B16; color:#FFF; font-size:10px; padding:10px 20px; border-radius:20px; pointer-events:none;">
+                    Add a message
+                  </button>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right Pane: Refinement details controls -->
+          <div class="refine-panel">
+            <div>
+              <h1 class="refine-title serif-display">Your guestbook is ready.</h1>
+              <p class="refine-desc">Fine-tune the design generated by Cairn AI below before launching.</p>
+            </div>
+            
+            <!-- Font Refinement switcher -->
+            <div class="refine-section">
+              <span class="form-label">Display Fonts (Serif)</span>
+              <div class="font-picker font-picker-serif">
+                <div class="font-option-card selected" data-font="newsreader">
+                  <div class="font-opt-label">Newsreader</div>
+                  <div class="font-opt-preview serif-display">Anna & Erik</div>
+                </div>
+                <div class="font-option-card" data-font="playfair">
+                  <div class="font-opt-label">Playfair Display</div>
+                  <div class="font-opt-preview" style="font-family:'Playfair Display', serif;">Anna & Erik</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="refine-section">
+              <span class="form-label">UI & Body Fonts (Sans)</span>
+              <div class="font-picker font-picker-sans">
+                <div class="font-option-card selected" data-font="jakarta">
+                  <div class="font-opt-label">Jakarta Sans</div>
+                  <div class="font-opt-preview" style="font-family:'Plus Jakarta Sans', sans-serif;">Welcome to our guestbook.</div>
+                </div>
+                <div class="font-option-card" data-font="inter">
+                  <div class="font-opt-label">Inter</div>
+                  <div class="font-opt-preview" style="font-family:'Inter', sans-serif;">Welcome to our guestbook.</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Metadata edits -->
+            <div class="refine-section" style="display:flex; flex-direction:column; gap:16px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label" for="refine-names-edit">Names</label>
+                <input type="text" id="refine-names-edit" class="text-input" placeholder="Anna & Erik">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label" for="refine-intro-edit">Intro Message</label>
+                <input type="text" id="refine-intro-edit" class="text-input" placeholder="Welcome — leave a stone for our cairn">
+              </div>
+            </div>
+            
+            <!-- Refined Actions -->
+            <div class="refine-section" style="border-top:none;">
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <button class="btn btn-primary" style="width:100%;" onclick="launchGuestbook()">
+                  Launch and Scan Guest QR
+                </button>
+                <button class="btn btn-secondary" style="width:100%;" onclick="navigateTo(3)">
+                  Back to Prompt
+                </button>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================== SCREEN 5: GUEST FEED - HERO SHOT ==================== -->
+      <section id="screen-5" class="screen-view">
+        
+        <!-- Mobile Centered View Frame -->
+        <div class="guest-view-frame">
+          
+          <!-- Host Control Bar on Screen 5 -->
+          <div class="host-feed-control-bar" id="host-feed-control-header" style="display: none; justify-content: space-between; align-items: center; padding: 10px 16px; background: rgba(255, 255, 255, 0.95); border-bottom: 1px solid var(--border-light); z-index: 100; position: relative;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--text-charcoal); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-sans);">Host Control Panel</span>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 10px; border-radius: 12px; font-family: var(--font-sans); margin-bottom: 0;" onclick="openKeepsakeDownloadModal()">Download Keepsake</button>
+              <button class="btn btn-primary" style="padding: 6px 12px; font-size: 10px; border-radius: 12px; font-family: var(--font-sans); background: var(--text-charcoal); color: #fff; margin-bottom: 0;" onclick="navigateTo(0)">Dashboard</button>
+            </div>
+          </div>
+
+          <!-- Brand header -->
+          <div class="guest-hero-brand">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+              <path d="M7 6C7 4.89543 9.23858 4 12 4C14.7614 4 17 4.89543 17 6C17 7.10457 14.7614 8 12 8C9.23858 8 7 7.10457 7 6Z" fill="#FFF"/>
+              <path d="M4 11C4 9.34315 7.58172 8 12 8C16.4183 8 20 9.34315 20 11C20 12.6569 16.4183 14 12 14C7.58172 14 4 12.6569 4 11Z" fill="#FFF" opacity="0.6"/>
+              <path d="M2 17.5C2 15.2909 6.47715 13.5 12 13.5C17.5228 13.5 22 15.2909 22 17.5C22 19.7091 17.5228 21.5 12 21.5C6.47715 21.5 2 19.7091 2 17.5Z" fill="#FFF"/>
+            </svg>
+            <span class="logo-text">cairn</span>
+          </div>
+
+          <!-- Hero Image Banner -->
+          <div class="guest-hero-banner">
+            <img src="assets/couple_portrait.png" class="guest-hero-image" alt="Anna & Erik">
+            <div class="guest-hero-overlay"></div>
+            <div class="guest-hero-content">
+              <h1 id="guest-hero-headline" class="guest-names serif-display">Anna & Erik</h1>
+              <span id="guest-hero-date" class="guest-date">June 15, 2026</span>
+              <p id="guest-hero-intro" class="guest-intro">Welcome — leave a stone for our cairn</p>
+            </div>
+          </div>
+          
+          <!-- Feed of Guest Card Items -->
+          <div class="guest-feed-container" id="actual-guest-feed">
+            <!-- Populated via JavaScript dynamically -->
+          </div>
+          
+          <!-- Floating Action Button for Adding Entries -->
+          <div class="floating-cta-container">
+            <button class="floating-cta-btn" onclick="toggleBottomSheet(true)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              <span>Add a stone</span>
+            </button>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================== SCREEN 6: GUEST SIGNATURE CANVAS ==================== -->
+      <section id="screen-6" class="screen-view">
+        
+        <div class="canvas-view-container">
+          
+          <header class="canvas-header">
+            <button class="btn-text" onclick="cancelScribble()">Cancel</button>
+            <h1 class="canvas-prompt serif-display">Sign Anna & Erik's cairn</h1>
+            <button class="btn-primary" style="padding: 8px 16px; font-size:12px;" onclick="saveScribbleEntry()">Save</button>
+          </header>
+          
+          <div class="canvas-wrapper">
+            <!-- Subtle Guide Line -->
+            <div class="canvas-guide"></div>
+            <span class="canvas-guide-label">Write or draw here</span>
+            <canvas id="signature-canvas"></canvas>
+          </div>
+          
+          <!-- Canvas controls toolbar -->
+          <div class="canvas-toolbar">
+            <div class="toolbar-row">
+              <!-- Color selections -->
+              <div class="brush-colors">
+                <div class="color-swatch active" style="background:#1F1B16;" data-color="#1F1B16"></div>
+                <div class="color-swatch" style="background:#A89A8A;" data-color="#A89A8A"></div>
+                <div class="color-swatch" style="background:#C9A19A;" data-color="#C9A19A"></div>
+                <div class="color-swatch" style="background:#D2B48C;" data-color="#D2B48C"></div>
+                <div class="color-swatch" style="background:#2C3A3B;" data-color="#2C3A3B"></div>
+                <div class="color-swatch" style="background:#E3A888;" data-color="#E3A888"></div>
+              </div>
+              
+              <!-- Brush size thickness selections -->
+              <div class="stroke-options">
+                <div class="stroke-opt active" data-size="3">
+                  <div class="stroke-dot dot-sm"></div>
+                </div>
+                <div class="stroke-opt" data-size="6">
+                  <div class="stroke-dot dot-md"></div>
+                </div>
+                <div class="stroke-opt" data-size="10">
+                  <div class="stroke-dot dot-lg"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="toolbar-row" style="justify-content: flex-end; gap: 12px;">
+              <!-- Undo / Redo controls -->
+              <button class="canvas-action-btn" id="canvas-undo" title="Undo">
+                <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M3 10h10a5 5 0 0 1 5 5v2a5 5 0 0 1-5 5M3 10l5-5M3 10l5 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="canvas-action-btn" id="canvas-redo" title="Redo">
+                <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M21 10H11a5 5 0 0 0-5 5v2a5 5 0 0 0 5 5M21 10l-5-5M21 10l-5 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="canvas-action-btn" id="canvas-clear" title="Clear All">
+                <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== DIALOGS & OVERLAY DRAWERS ==================== -->
+  
+  <!-- Add stone options Bottom Sheet menu drawer (Screen 5 floating click) -->
+  <div class="bottom-sheet-overlay" id="add-stone-sheet-overlay" onclick="toggleBottomSheet(false)">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+      <div class="sheet-header">
+        <h3 class="sheet-title serif-display">Add a stone</h3>
+        <button class="sheet-close-btn" onclick="toggleBottomSheet(false)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="sheet-menu-grid">
+        
+        <div class="sheet-menu-btn" onclick="openAddMessageDialog()">
+          <!-- Doc icon -->
+          <svg viewBox="0 0 24 24" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-linecap="round"/>
+            <polyline points="14 2 14 8 20 8" stroke-linecap="round"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <span class="sheet-menu-label">Write Message</span>
+        </div>
+        
+        <div class="sheet-menu-btn" onclick="toggleBottomSheet(false); navigateTo(6)">
+          <!-- Pencil icon -->
+          <svg viewBox="0 0 24 24" stroke-width="1.5">
+            <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" stroke-linecap="round"/>
+          </svg>
+          <span class="sheet-menu-label">Draw Scribble</span>
+        </div>
+        
+        <div class="sheet-menu-btn" onclick="document.getElementById('guest-photo-input').click()">
+          <!-- Image icon -->
+          <svg viewBox="0 0 24 24" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke-linecap="round"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15L16 10L5 21" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="sheet-menu-label">Upload Photo</span>
+        </div>
+        
+        <div class="sheet-menu-btn" onclick="document.getElementById('guest-video-input').click()">
+          <!-- Video camera icon -->
+          <svg viewBox="0 0 24 24" stroke-width="1.5">
+            <path d="M23 7l-7 5 7 5V7z" stroke-linecap="round"/>
+            <rect x="1" y="5" width="15" height="14" rx="2" stroke-linecap="round"/>
+          </svg>
+          <span class="sheet-menu-label">Record Video</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Message dialog box (Form input popup) -->
+  <div class="dialog-overlay" id="add-message-dialog">
+    <div class="dialog-box">
+      <h3 class="dialog-title serif-display" id="dialog-header-title">Write your message</h3>
+      
+      <!-- Media Preview Container -->
+      <div id="dialog-media-preview-container" style="display:none; width:100%; max-height:220px; overflow:hidden; border-radius:var(--radius-sm); border:1px solid var(--border-light); margin-bottom:12px; background:#000; position:relative; justify-content:center; align-items:center;">
+        <img id="dialog-image-preview" style="max-width:100%; max-height:100%; object-fit:contain; display:none;">
+        <video id="dialog-video-preview" style="max-width:100%; max-height:100%; object-fit:contain; display:none;" controls></video>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;" id="dialog-caption-group">
+        <label class="form-label" for="guest-text-message" id="dialog-message-label">Message</label>
+        <textarea id="guest-text-message" class="text-input light-textarea" placeholder="Dearest Anna & Erik..."></textarea>
+      </div>
+      
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="guest-signature-name">Your Name</label>
+        <input type="text" id="guest-signature-name" class="text-input" placeholder="Your name (e.g. Sofia)">
+      </div>
+      
+      <div class="dialog-actions">
+        <button class="btn btn-text" onclick="closeAddMessageDialog()">Cancel</button>
+        <button class="btn btn-primary" style="padding: 10px 24px; font-size: 13px;" id="dialog-submit-btn" onclick="submitTextMessage()">Post Stone</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Hidden inputs for actual device uploads -->
+  <input type="file" id="guest-photo-input" accept="image/*" style="display:none;" onchange="handleGuestPhotoSelected(this)">
+  <input type="file" id="guest-video-input" accept="video/*" style="display:none;" onchange="handleGuestVideoSelected(this)">
+
+  <!-- Auth Modal (Sign Up / Sign In) -->
+  <div class="dialog-overlay" id="auth-dialog">
+    <div class="dialog-box auth-box" style="max-width:400px;">
+      <h3 class="dialog-title serif-display" id="auth-title">Create your host account</h3>
+      <p class="dialog-subtitle" style="font-size:12px; color:var(--text-taupe); margin-top:-6px; margin-bottom:16px;" id="auth-subtitle">Join Cairn to configure your custom keepsake guestbook.</p>
+      
+      <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+        <div class="form-group" id="auth-name-group">
+          <label class="form-label" for="auth-name">Full Name</label>
+          <input type="text" id="auth-name" class="text-input" placeholder="Sofia Soderberg">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="auth-email">Email Address</label>
+          <input type="email" id="auth-email" class="text-input" placeholder="sofia@example.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="auth-password">Password</label>
+          <input type="password" id="auth-password" class="text-input" placeholder="Min. 8 characters" required>
+        </div>
+        
+        <div class="dialog-actions" style="margin-top:20px; padding-top:0;">
+          <button type="button" class="btn btn-text" onclick="closeAuthModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="padding:10px 24px; font-size:13px; background:var(--text-charcoal); color:#fff;" id="auth-submit-btn">Sign Up</button>
+        </div>
+        
+        <div style="text-align:center; font-size:11px; color:var(--text-taupe); margin-top:16px;" id="auth-switch-text">
+          Already have an account? <span style="text-decoration:underline; cursor:pointer; color:var(--text-charcoal); font-weight:600;" onclick="switchAuthMode('signin')">Sign In</span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Download Keepsake Modal -->
+  <div class="dialog-overlay" id="download-keepsake-dialog">
+    <div class="dialog-box download-box" style="max-width:440px;">
+      <h3 class="dialog-title serif-display" style="margin-bottom:6px;">Download Your Keepsake</h3>
+      <p class="dialog-subtitle" style="font-size:12px; color:var(--text-taupe); margin-bottom:20px; font-family:var(--font-sans);">Choose a keepsake format to preserve or print your guestbook stones.</p>
+      
+      <div class="download-options-list" style="display:flex; flex-direction:column; gap:12px;">
+        
+        <!-- Option 1: PDF -->
+        <div class="download-option-item" onclick="handleKeepsakeDownload('pdf')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
+          <div class="download-icon-box" style="color:var(--accent-rose); display:flex; align-items:center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="download-option-info">
+            <h4 class="download-option-title" style="font-size:13px; font-weight:700; margin:0 0 4px 0; color:var(--text-charcoal);">Printable Album (PDF)</h4>
+            <p class="download-option-desc" style="font-size:11px; color:var(--text-taupe); margin:0; line-height:1.4;">Export stills, drawings, and text cards into an editorial print layout with video QR codes.</p>
+          </div>
+        </div>
+
+        <!-- Option 2: Web Bundle -->
+        <div class="download-option-item" onclick="handleKeepsakeDownload('webbundle')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
+          <div class="download-icon-box" style="color:var(--text-charcoal); display:flex; align-items:center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="download-option-info">
+            <h4 class="download-option-title" style="font-size:13px; font-weight:700; margin:0 0 4px 0; color:var(--text-charcoal);">Offline Web Bundle (HTML)</h4>
+            <p class="download-option-desc" style="font-size:11px; color:var(--text-taupe); margin:0; line-height:1.4;">A self-contained web file of the live guestbook. Play recorded videos and scale sketches offline forever.</p>
+          </div>
+        </div>
+
+        <!-- Option 3: MP4 Compilation -->
+        <div class="download-option-item" onclick="handleKeepsakeDownload('mp4')" style="display:flex; gap:16px; padding:16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s ease; background:#fff;">
+          <div class="download-icon-box" style="color:var(--text-taupe); display:flex; align-items:center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M23 7l-7 5 7 5V7z"/>
+              <rect x="1" y="5" width="15" height="14" rx="2"/>
+            </svg>
+          </div>
+          <div class="download-option-info">
+            <h4 class="download-option-title" style="font-size:13px; font-weight:700; margin:0 0 4px 0; color:var(--text-charcoal);">Video Keepsake Reel (.MP4)</h4>
+            <p class="download-option-desc" style="font-size:11px; color:var(--text-taupe); margin:0; line-height:1.4;">An automated movie compiling guest photos, drawings, and playing video greetings back-to-back.</p>
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- Video compiler loader animation -->
+      <div id="compiler-loader" style="display:none; flex-direction:column; align-items:center; gap:12px; margin-top:20px; border-top:1px solid var(--border-light); padding-top:20px;">
+        <div style="display:flex; justify-content:space-between; width:100%; font-size:11px; color:var(--text-taupe); font-family:var(--font-sans);">
+          <span id="compiler-loader-text">Stitching guest stones...</span>
+          <span id="compiler-loader-percent">0%</span>
+        </div>
+        <div style="width:100%; height:4px; background:var(--border-light); border-radius:2px; overflow:hidden;">
+          <div id="compiler-loader-bar" style="width:0%; height:100%; background:var(--text-charcoal); transition: width 0.1s linear;"></div>
+        </div>
+      </div>
+      
+      <div class="dialog-actions" style="margin-top:20px; border-top:1px solid var(--border-light); padding-top:16px; padding-bottom:0; margin-bottom:-4px;">
+        <button class="btn btn-text" onclick="closeKeepsakeDownloadModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic generator loading screen transition (Screen 3 to Screen 4) -->
+  <div id="generator-loading-overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:var(--bg-cream); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:24px; transition: opacity 0.4s ease;">
+    <!-- Abstract Stack of Stones loader animation -->
+    <div style="position:relative; width: 60px; height: 60px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end;">
+      <!-- Stone 3 -->
+      <div style="width:24px; height:12px; background:#1F1B16; border-radius:50%; margin-bottom:2px; animation: bounceStone 1.2s infinite ease-in-out; animation-delay: 0.4s;"></div>
+      <!-- Stone 2 -->
+      <div style="width:36px; height:14px; background:#A89A8A; border-radius:50%; margin-bottom:2px; animation: bounceStone 1.2s infinite ease-in-out; animation-delay: 0.2s;"></div>
+      <!-- Stone 1 -->
+      <div style="width:48px; height:16px; background:#1F1B16; border-radius:50%; animation: bounceStone 1.2s infinite ease-in-out;"></div>
+    </div>
+    
+    <span class="generator-status-text uppercase-label" style="text-align:center;">Curating your visual vibes...</span>
+  </div>
+
+  <style>
+    @keyframes bounceStone {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+  </style>
+
+  <script src="app.js"></script>
+</body>
+</html>
