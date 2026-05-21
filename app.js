@@ -138,8 +138,38 @@ const FONTS = {
   }
 };
 
+// LocalStorage Persistence Helpers
+function saveStateToLocalStorage() {
+  try {
+    localStorage.setItem('cairn_state', JSON.stringify({
+      currentUser: state.currentUser,
+      hostConfig: state.hostConfig,
+      hostGuestbooks: state.hostGuestbooks,
+      feedItems: state.feedItems
+    }));
+  } catch (e) {
+    console.warn('LocalStorage save failed:', e);
+  }
+}
+
+function loadStateFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('cairn_state');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.currentUser !== undefined) state.currentUser = parsed.currentUser;
+      if (parsed.hostConfig !== undefined) state.hostConfig = parsed.hostConfig;
+      if (parsed.hostGuestbooks !== undefined) state.hostGuestbooks = parsed.hostGuestbooks;
+      if (parsed.feedItems !== undefined) state.feedItems = parsed.feedItems;
+    }
+  } catch (e) {
+    console.warn('LocalStorage load failed:', e);
+  }
+}
+
 // Global App Initialization
 document.addEventListener('DOMContentLoaded', () => {
+  loadStateFromLocalStorage();
   initRouting();
   initFormInteractivity();
   syncNameFieldsByEventType();
@@ -147,6 +177,24 @@ document.addEventListener('DOMContentLoaded', () => {
   initVibeGenerator();
   renderPreview();
   renderGuestFeed();
+  
+  // Sync the cover photo based on loaded state if present
+  if (state.hostConfig && state.hostConfig.vibes && state.hostConfig.vibes.heroPhoto) {
+    document.querySelectorAll('.guest-hero-image').forEach(img => {
+      img.src = state.hostConfig.vibes.heroPhoto;
+    });
+  }
+  
+  // Setup navbar user badge state
+  if (state.currentUser) {
+    const authBtns = document.getElementById('landing-auth-buttons');
+    if (authBtns) authBtns.style.display = 'none';
+    const userBadge = document.getElementById('landing-user-badge');
+    if (userBadge) userBadge.style.display = 'flex';
+    const avatarBadge = document.getElementById('host-navbar-avatar');
+    if (avatarBadge) avatarBadge.innerText = state.currentUser.name[0].toUpperCase();
+  }
+  
   navigateTo(0); // Ensure initial routing state is synced
 });
 
@@ -242,6 +290,8 @@ function initRouting() {
     if (screenNum === 6) {
       setTimeout(resizeCanvas, 50);
     }
+    
+    saveStateToLocalStorage();
   };
   
   // Brand Logo Click resets to Screen 0
@@ -1014,6 +1064,7 @@ window.submitTextMessage = function() {
   
   closeAddMessageDialog();
   renderGuestFeed();
+  saveStateToLocalStorage();
 };
 
 // Simulate adding a Photo or Video card dynamically (Fallback)
@@ -1362,11 +1413,16 @@ window.handleAuthSubmit = function(event) {
 
 window.handleSignOut = function() {
   state.currentUser = null;
+  state.hostGuestbooks = [];
+  try {
+    localStorage.removeItem('cairn_state');
+  } catch (e) {}
   const authBtns = document.getElementById('landing-auth-buttons');
   if (authBtns) authBtns.style.display = 'flex';
   const userBadge = document.getElementById('landing-user-badge');
   if (userBadge) userBadge.style.display = 'none';
-  navigateTo(0);
+  // Reload the page to revert completely to the fresh default state
+  window.location.reload();
 };
 
 // Keepsake Compile & Download Modal Dialog Controllers
